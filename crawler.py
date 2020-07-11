@@ -5,7 +5,7 @@ import json
 from bs4 import BeautifulSoup
 import enums
 import yaml
-import playInfoModel as p
+import log
 
 class Crawler:
     def __init__(self,url):
@@ -14,6 +14,7 @@ class Crawler:
         self.html.encoding = 'ANSI'
         self.soup = BeautifulSoup(self.html.text,enums.PARSER)
         self.dataLst = []
+        self.loglst = []
         self.apiUrl = ""
         with open('resource/info.yaml') as f:
             self.info =yaml.load(f)
@@ -68,6 +69,9 @@ class Crawler:
         for playinfo in self.dataLst:
             data = playinfo
             ret = requests.post(apiUrl,data=json.dumps(data),headers=headers)
-            print("statusCode: " + str(ret.status_code))
-            print("headers: " + str(ret.headers))
-            print("contents: " + ret.text)
+            logDic = {}
+            logDic["statusCode"]=str(ret.status_code)
+            logDic["headers"]=str(ret.headers)
+            logDic["contents"]=ret.text
+            self.loglst.append(logDic)
+        log.loggerWriter(self.loglst)
