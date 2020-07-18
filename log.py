@@ -3,7 +3,8 @@ import os
 
 def loggerWriter(loglst):
     month = str(dt.datetime.now().strftime('%m'))
-    if not os.path.exists(os.path.dirname(month)):
+    v = os.path.dirname(month)
+    if not os.path.exists(month):
         os.mkdir(month)
     today = (str(dt.datetime.now()).split(" "))[0]
     filename = month+'/'+today+"-"+"log.txt"

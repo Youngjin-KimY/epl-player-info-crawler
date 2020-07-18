@@ -6,12 +6,13 @@ from bs4 import BeautifulSoup
 import enums
 import yaml
 import log
+from selenium import webdriver
 
 class Crawler:
     def __init__(self,url):
         self.url = url
         self.html = requests.get(url)
-        self.html.encoding = 'ANSI'
+        self.html.encoding = 'UTF-8'
         self.soup = BeautifulSoup(self.html.text,enums.PARSER)
         self.dataLst = []
         self.loglst = []
